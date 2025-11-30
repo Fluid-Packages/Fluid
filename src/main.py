@@ -4,7 +4,7 @@ import installer, configrunner
 from sys import argv
 
 def show_help():
-    print("""usage: fluid [install <package> / uninstall <package> / show]
+    print("""usage: fluid [install / uninstall] <package>
 
 These are common Fluid commands:
 
@@ -14,9 +14,6 @@ install package
 
 uninstall package
 \tfluid uninstall <package>  |  uninstall package
-
-show all packages
-\tfluid show  |  show all packages
 
 
 | more on github
