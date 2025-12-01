@@ -10,6 +10,9 @@ def run(install_configs: dict, repo: str):
     if "run_after_install" in install_configs:
         for x in install_configs["run_after_install"]:
             os.system(x)
+    if "show_after_install" in install_configs:
+        for x in install_configs["show_after_install"]:
+            print(x)
     if "run_on_install" in install_configs:
         if sys.platform != "win32":
             os.system(f"sh {pathlib.Path.home() / pathlib.Path("Fluid") / pathlib.Path(repo)}/{install_configs["run_on_install"]}")
