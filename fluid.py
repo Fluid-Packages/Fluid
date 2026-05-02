@@ -3,7 +3,7 @@ import zipfile
 import pathlib
 import os, json
 import sys, time
-import shutil, platform
+import shutil
 
 BASE_DIR = pathlib.Path.home()/"Fluid"
 BASE_REPO = "https://raw.githubusercontent.com/Fluid-Packages/base-repo/refs/heads/main/repo.json"
