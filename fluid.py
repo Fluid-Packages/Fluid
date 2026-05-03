@@ -16,7 +16,9 @@ Examples:\
 \n\t{sys.argv[0]} uninstall python     | Uninstall package\
 \n\t{sys.argv[0]} show                 | Show installed packages\
 \n\t{sys.argv[0]} fetch                | Upgrade repositories\
-\n\t{sys.argv[0]} run libresprite      | Run package binaries")
+\n\t{sys.argv[0]} run libresprite      | Run package binaries\
+\n\t{sys.argv[0]} packages             | Show all packages\
+\n\t{len(sys.argv[0])*" "} |-> OR pkgs | repos | repositories")
     sys.exit()
 
 def parse_argv(argv: list[str]):
@@ -27,7 +29,7 @@ def parse_argv(argv: list[str]):
     
     action = argv[0]
 
-    if action == "show":
+    if action in ("show","repos","repositories","pkgs","packages"):
         return action, []
     elif action == "fetch":
         fetch()
@@ -241,7 +243,25 @@ def main():
                 return
             for package in os.listdir(BASE_DIR/"packages"):
                 print(f"\t- {package}")
+        case "repos" | "packages" | "repositories" | "pkgs":
+            if "repositories.json" not in os.listdir(BASE_DIR):
+                with open(BASE_DIR/"repositories.json", "w") as f:
+                    json.dump({"repos":[BASE_REPO]}, f, indent=4)
+            if "packages.json" not in os.listdir(BASE_DIR):
+                with open(BASE_DIR/"packages.json", "w") as f:
+                    json.dump({"packages":dict()}, f, indent=4)
+
+            print("\nAvaliable packages:")
+            pkgs = get_packages()
+            for pkg in list(pkgs):
+                print(f" - {pkg}")
+            print("\nFrom repositories:")
+            for repo in json.load(open(BASE_DIR/"repositories.json"))["repos"]:
+                print(f" - {repo}")
     print()
 
 if __name__ == "__main__":
-    main()
+    try:    
+        main()
+    except Exception as e:
+        print(f"An error occured. {e}")
